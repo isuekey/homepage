@@ -2,9 +2,10 @@
   "name": "mypage",
   "version": "0.0.1",
   "description": "kun",
-  "main": "index.js",
+  "private": true,
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^4.44.1"
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }
