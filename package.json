@@ -12,6 +12,8 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "layerconvert": "^1.0.2"
+    "css-loader": "^4.1.1",
+    "layerconvert": "^1.0.2",
+    "style-loader": "^1.2.1"
   }
 }
