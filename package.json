@@ -4,8 +4,14 @@
   "description": "kun",
   "private": true,
   "license": "MIT",
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
   "devDependencies": {
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "layerconvert": "^1.0.2"
   }
 }
