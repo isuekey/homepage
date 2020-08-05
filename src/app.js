@@ -2,6 +2,7 @@ import * as convert from 'layerconvert';
 import SimpleDom from './lib/dom.js';
 import './assets/css/style.css';
 import icon from './assets/img/icon.svg';
+import noteData from './assets/data/note.xml';
 
 class App extends SimpleDom{
   constructor(id) {
@@ -19,6 +20,10 @@ class App extends SimpleDom{
     img.src = icon;
     this.dom.appendChild(element);
     this.dom.appendChild(img);
+    console.log('noteData', noteData);
+    img.onclick=function(){
+      console.log('I am clicked at app.js. added watching mode. add webpack-dev-server');
+    };
   }
 }
 

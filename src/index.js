@@ -6,5 +6,3 @@ const onload = function(){
 };
 const body = document.body;
 body.onload = onload;
-
-
