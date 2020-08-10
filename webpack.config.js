@@ -4,9 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+  mode:'development',
   entry:{
-    app:'./src/index.js',
-    vendor:'./src/app.js',
+    main:'./src/index.js',
+    app:'./src/app.js',
   },
   devtool:'inline-source-map',
   devServer:{
@@ -18,12 +19,19 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       title:'Output Management',
+      template:'./index.html',
     }),
   ],
   output:{
-    filename:'[name].bundle.js',
+    filename:'[name].[hash].mmx',
+    chunkFilename:'[name].[hash].mmmx',
     path: path.resolve(__dirname, 'dist'),
-    publicPath:'/',
+    jsonpScriptType:'text/javascript',
+  },
+  optimization:{
+    splitChunks:{
+      chunks:'all',
+    },
   },
   module:{
     rules:[
