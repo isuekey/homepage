@@ -18,20 +18,28 @@ module.exports = {
       cleanStaleWebpackAssets:false
     }),
     new HtmlWebpackPlugin({
-      title:'Output Management',
+      title:'Caching',
       template:'./index.html',
     }),
   ],
   output:{
-    filename:'[name].[hash].mmx',
-    chunkFilename:'[name].[hash].mmmx',
+    filename:'[name].[contenthash].js',
+    // chunkFilename:'[name].[contenthash].mmmx',
     path: path.resolve(__dirname, 'dist'),
     jsonpScriptType:'text/javascript',
   },
   optimization:{
+    moduleIds:'hashed',
     splitChunks:{
-      chunks:'all',
+      cacheGroups:{
+        vendor:{
+          test:/[\\/]node_modules[\\/]/,
+          name:'vendors',
+          chunks:'all'
+        }
+      }
     },
+    runtimeChunk:'single',
   },
   module:{
     rules:[

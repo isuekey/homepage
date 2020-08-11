@@ -24,7 +24,7 @@
   "dependencies": {
     "css-loader": "^4.1.1",
     "file-loader": "^6.0.0",
-    "layerconvert": "^1.0.2",
+    "layerconvert": "https://github.com/isuekey/layerconvert",
     "style-loader": "^1.2.1"
   }
 }

@@ -1,4 +1,4 @@
-import * as convert from 'layerconvert';
+import * as layer from 'layerconvert';
 import SimpleDom from './lib/dom.js';
 import './assets/css/style.css';
 import icon from './assets/img/icon.svg';
@@ -20,7 +20,7 @@ class App extends SimpleDom{
     img.src = icon;
     this.dom.appendChild(element);
     this.dom.appendChild(img);
-    // console.log('noteData', noteData);
+    console.log('display', layer);
     img.onclick=function(){
       console.log('I am clicked at app.js. added watching mode. add webpack-dev-server');
     };
