@@ -3,6 +3,7 @@ import SimpleDom from './lib/dom.js';
 import './assets/css/style.css';
 import icon from './assets/img/icon.svg';
 import noteData from './assets/data/note.xml';
+import { cube } from './lib/math.js';
 
 class App extends SimpleDom{
   constructor(id) {
@@ -20,7 +21,7 @@ class App extends SimpleDom{
     img.src = icon;
     this.dom.appendChild(element);
     this.dom.appendChild(img);
-    console.log('display', layer);
+    console.log('display', layer, cube(9) );
     img.onclick=function(){
       console.log('I am clicked at app.js. added watching mode. add webpack-dev-server');
     };

@@ -1,17 +1,13 @@
 
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
-  mode:'development',
   entry:{
     main:'./src/index.js',
     app:'./src/app.js',
-  },
-  devtool:'inline-source-map',
-  devServer:{
-    contentBase:'./dist',
   },
   plugins:[
     new CleanWebpackPlugin({
@@ -21,29 +17,15 @@ module.exports = {
       title:'Caching',
       template:'./index.html',
     }),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim:true,
+      skipWaiting:true,
+    }),
   ],
   output:{
     filename:'[name].[contenthash].js',
     // chunkFilename:'[name].[contenthash].mmmx',
     path: path.resolve(__dirname, 'dist'),
-    jsonpScriptType:'text/javascript',
-  },
-  optimization:{
-    moduleIds:'hashed',
-    splitChunks:{
-      cacheGroups:{
-        vendor:{
-          test:/[\\/]node_modules[\\/]/,
-          name:'vendors',
-          chunks:'all'
-        }
-      }
-    },
-    runtimeChunk:'single',
-    usedExports:true,
-  },
-  resolve:{
-    extensions:['.wasm','.mjs','.js','.json','.mmx', '.mmmx'],
   },
   module:{
     rules:[
