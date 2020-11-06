@@ -25,9 +25,8 @@ class App extends SimpleDom{
     img.onclick=function(){
       console.log('I am clicked at app.js. added watching mode. add webpack-dev-server');
     };
-    const rollerEle = new roller.numberExample.NumberRoller(element);
+    const rollerEle = new roller.numberExample.NumberRoller(this.dom);
     rollerEle.display();
-    console.log('who');
   }
 }
 
