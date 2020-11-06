@@ -1,5 +1,5 @@
 // import * as app from './app.js';
-
+/*
 if('serviceWorker' in navigator) {
   window.addEventListener('load', ()=>{
     navigator.serviceWorker.register('./service-worker.js').then(registration => {
@@ -9,6 +9,7 @@ if('serviceWorker' in navigator) {
     });
   });
 }
+*/
 
 const onload = function(){
   import('./app.js').then(app => {
