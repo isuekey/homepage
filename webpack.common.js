@@ -17,10 +17,11 @@ module.exports = {
       title:'Caching',
       template:'./index.html',
     }),
-    new WorkboxPlugin.GenerateSW({
+/*    new WorkboxPlugin.GenerateSW({
       clientsClaim:true,
       skipWaiting:true,
     }),
+*/
   ],
   output:{
     filename:'[name].[contenthash].js',
