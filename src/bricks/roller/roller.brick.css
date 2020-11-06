@@ -3,4 +3,8 @@
   min-height:100px;
   flex:1;
   display:flex;
+  overflow:auto;
+  flex-direction:row;
+}
+.roller-item {
 }
