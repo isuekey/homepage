@@ -1,4 +1,5 @@
 import * as bricks from '../bricks/index.js';
+import './number.example.css';
 
 class NumberRoller {
   constructor(parent=document) {
@@ -9,6 +10,7 @@ class NumberRoller {
       this.index = (this.index + 1) % 10;
       // console.log('rolling click', this.index);
       this.button.innerHTML=`<span>rolling the roller ${this.index}</span>`;
+      this.roller && this.roller.rollTo(this.index);
     };
     
   }
