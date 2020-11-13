@@ -21,7 +21,7 @@ class App extends SimpleDom{
     img.src = icon;
     this.dom.appendChild(element);
     this.dom.appendChild(img);
-    console.log('display', layer, cube(9) );
+    // console.log('display', layer, cube(9) );
     img.onclick=function(){
       console.log('I am clicked at app.js. added watching mode. add webpack-dev-server');
     };

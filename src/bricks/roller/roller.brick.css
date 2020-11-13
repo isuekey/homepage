@@ -1,23 +1,34 @@
+.number-roller-container {
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  align-items:center;
+}
 
 .roller-brick {
-  background: linear-gradient(skyblue,khaki);
+  background: black;
   perspective: 550px;
   display:flex;
   align-items:center;
   justify-content:center;
-  min-width:100px;
-  min-height:180px;
+  max-width:78px;
+  min-height:100px;
   position:relative;
   box-sizing:border-box;
   overflow:hidden;
 }
+.roller-brick + .roller-brick {
+  margin-left:4px;
+}
+
 .roller-container {
-  width:100px;
+  width:80px;
   height:100px;
   display:block;
   transform-style: preserve-3d;
-  transition: all .3s ease-in;
+  transition: all 3s ease-in;
   box-sizing:border-box;
+  background:black;
 }
 
 .roller-item {
@@ -29,46 +40,8 @@
   height:100%;
   backface-visibility: hidden;
   box-sizing:border-box;
-  background-color:rgba(255,255,255, 1);
-}
-
-.roller-container > .roller-item.item-0 {
-  transform: translateZ(153.8841768587627px);
-}
-
-.roller-container > .roller-item.item-1 {
-  transform: rotateX(-36deg) translateZ(153.8841768587627px) ;
-}
-
-.roller-container > .roller-item.item-2 {
-  transform: rotateX(-72deg) translateZ(153.8841768587627px);
-}
-
-.roller-container > .roller-item.item-3 {
-  transform: rotateX(-108deg) translateZ(153.8841768587627px);
-}
-
-.roller-container > .roller-item.item-4 {
-  transform: rotateX(-144deg) translateZ(153.8841768587627px);
-}
-
-.roller-container > .roller-item.item-5 {
-  transform: rotateX(-180deg) translateZ(153.8841768587627px);
-}
-
-.roller-container > .roller-item.item-6 {
-  transform: rotateX(-216deg) translateZ(153.8841768587627px);
-}
-
-.roller-container > .roller-item.item-7 {
-  transform: rotateX(-252deg) translateZ(153.8841768587627px);
-}
-
-.roller-container > .roller-item.item-8 {
-  transform: rotateX(-288deg) translateZ(153.8841768587627px);
-}
-
-.roller-container > .roller-item.item-9 {
-  transform: rotateX(-324deg) translateZ(153.8841768587627px);
+  background-color: transparent;
+  font-size:100px;
+  color:white;
 }
 

@@ -6,7 +6,7 @@ class SimpleDom {
       return;
     }
     this.dom = document.getElementById(id);
-    console.log('single dom');
+    // console.log('single dom');
     return;
   }
 }
