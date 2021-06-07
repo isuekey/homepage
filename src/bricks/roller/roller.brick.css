@@ -1,11 +1,48 @@
+.number-roller-container {
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  align-items:center;
+}
+
+.roller-brick {
+  background: black;
+  perspective: 550px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  max-width:78px;
+  min-height:100px;
+  position:relative;
+  box-sizing:border-box;
+  overflow:hidden;
+}
+.roller-brick + .roller-brick {
+  margin-left:4px;
+}
 
 .roller-container {
-  min-height:100px;
-  flex:1;
-  display:flex;
-  overflow:auto;
-  flex-direction:row;
+  width:80px;
+  height:100px;
+  display:block;
+  transform-style: preserve-3d;
+  transition: all 3s ease-in;
+  box-sizing:border-box;
+  background:black;
 }
+
 .roller-item {
   flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:absolute;
+  width:100%;
+  height:100%;
+  backface-visibility: hidden;
+  box-sizing:border-box;
+  background-color: transparent;
+  font-size:100px;
+  color:white;
 }
+
