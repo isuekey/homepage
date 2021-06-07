@@ -1,0 +1,159 @@
+<html lang="zh">
+  <head>
+    <title>stack.info</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      html,body{
+        width:100%;
+        height:100%
+      }
+      .input-container {
+        display:flex;
+        flex-direction:row;
+      }
+      .margin-bottom-8 {
+        margin-bottom:8px;
+      }
+      .hidden {
+        display:none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>股票信息下载</h1>
+    <div class="input-container margin-bottom-8">
+      <span>股票代码举例</span>
+      <span>沪深</span>
+    </div>
+    <div class="input-container margin-bottom-8">
+      <div class="input-item">
+        <label>股票代码</label>
+        <input type="text" id="code" placeholder="hk00152,hk00708"></input>
+      </div>
+      <div class="input-item">
+        <label>开始日期</label>
+        <input type="date" id="startDate"></input>
+      </div>
+      <div class="input-item">
+        <label>结束日期</label>
+        <input type="date" id="endDate"></input>
+      </div>
+      <div class="input-item">
+        <label>开始日期</label>
+        <select name="groupType" id="type">
+          <option value="">请选择分组类型</option>
+          <option value="day">天</option>
+          <!-- <option value="week">周</option> -->
+        </select>
+      </div>
+    </div>
+    <div class="input-container margin-bottom-8">
+      <span>股票请求地址:</span>
+      <span>https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=</span>
+      <span id="queryParam"></span>
+    </div>
+    <div class="input-container">
+      <a id="download" class="hidden"></a>
+      <button name="button" id="button">下载</button>
+    </div>
+    <address>
+      <a href="mailto:liuhanru@liuhanru-Inspiron-7572">liuhanru</a>
+    </address>
+    <script>
+      const queryParamSpan = document.getElementById('queryParam');
+      const paramObject = {cur:'qfq', type:'day',};
+      const urlBase = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=";
+      const paramOrder = ['code', 'type','startDate','endDate'];
+      const inputMap = {};
+      const valueBase = {type:'day'};
+      paramOrder.forEach(key => {
+        const item = document.getElementById(key);
+        if(item) {
+          inputMap[key]=item;
+          item.addEventListener('blur', (event) => {
+            paramObject[key]= event.target.value || valueBase[key];
+            reformatUrl();
+          });
+        }
+      })
+      const targetObject = {
+        urlBase, target:urlBase,
+      };
+      const stepMap = {
+        day:86400*1000, week:86400*1000*7
+      };
+      const reformatUrl = () => {
+        const paramBase = paramOrder.slice(1).map(ele => paramObject[ele]).join(',');
+        const getDateTime = (dateTime='') => {
+          if(!dateTime) return 0;
+          const day = new Date();
+          const dayParam = dateTime.split(/[-/]/);
+          day.setFullYear(dayParam[0], dayParam[1] - 1, dayParam[2]);
+          return day.getTime();
+        }
+        const begin = getDateTime(paramObject.startDate);
+        const end = getDateTime(paramObject.endDate);
+        const step = stepMap[paramObject.type] || stepMap.day;
+        const counts = Math.ceil((end - begin)/step);
+        const paramList = (paramObject.code||'').split(',').filter(ele => !!ele).map(ele => {
+          return [ele, paramBase, counts, 'qfq'].join(',');
+        });
+        queryParamSpan.innerHTML = paramList;
+        targetObject.target = paramList.map(param => urlBase + param);
+      }
+      reformatUrl();
+      const downloadButton = document.getElementById('button');
+      const downloadAnchor = document.getElementById('download');
+      let downloading = false;
+      downloadButton.addEventListener('click', (event) =>{
+        if(downloading) return;
+        const paramIsNotFullFilled = paramOrder.some(ele => !paramObject[ele]);
+        if(paramIsNotFullFilled) {
+          return alert('缺少参数');
+        }
+        downloading = true;
+        downloadTheStockInfo();
+      });
+      const changeDownloadingButton = (status) => {
+        switch(status) {
+        case 'fetching':
+          paramOrder.forEach(key => {
+            inputMap[key] && (inputMap[key].disabled = true);
+          });
+          break;
+        case 'finished':
+          paramOrder.forEach(key => {
+            inputMap[key] && (inputMap[key].disabled = false);
+          });
+          break;
+        }
+      }
+      const downloadTheStockInfo = () => {
+        changeDownloadingButton('fetching');
+        return Promise.all(targetObject.target.map(ele => {
+          return fetch(ele).then(resp=>resp.json())
+        })).then(dataArray => {
+          const codeList = paramObject['code'] || '';
+          const csvData = codeList.trim().split(',').map((code,idx) => {
+            const data = dataArray[idx];
+            const codeData = data.data[code];
+            const listData = codeData.qfqday || codeData.day;
+            return [
+              [code,'数据开始',paramObject.startDate,paramObject.endDate,'','',].join(','),
+              ["交易日","开盘价","收盘价","最高价","最低价","总手数",].join(','),
+              ...listData.map(dataItem => dataItem.join(',')),
+              [code,'数据结束',paramObject.startDate,paramObject.endDate,'','',].join(','),
+            ].join(',\n');
+          }).concat('').join(',\n');
+          // console.log('listData', csvData);
+          downloadAnchor.href = URL.createObjectURL(new Blob([csvData], {type:'plain/text'}));
+          downloadAnchor.download = [codeList,paramObject.startDate,paramObject.endDate, 'csv'].join('.');
+          downloadAnchor.click();
+        }).finally(()=>{
+          changeDownloadingButton('finished');
+          downloading = false;
+        });
+      }
+    </script>
+  </body>
+</html>
