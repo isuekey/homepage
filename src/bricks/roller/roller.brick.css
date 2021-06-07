@@ -7,4 +7,5 @@
   flex-direction:row;
 }
 .roller-item {
+  flex:1;
 }
